@@ -76,6 +76,7 @@ f12stg_ints = np.asarray(mints.ao_f12_stg(2.0))
 f12stg_ints2 = np.asarray(mints.ao_f12_stg(2.0,conv,conv,conv,conv))
 
 # Compute F12 integrals with cGTG geminal
+# ----------------------------------------
 cgtg_params = stggtg(1.0)
 f12cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
 f12cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
