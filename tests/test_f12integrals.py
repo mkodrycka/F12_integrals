@@ -176,7 +176,6 @@ def test_f12cgtg_h2o_aug_cc_pvdz():
 
     assert np.allclose(f12cgtg_ints,f12cgtg_ints2)
 
-    import pdb; pdb.set_trace()
     # Test aginst libint1       
     f12cgtg_ints_libint1 = np.load("data_libint1/h2o_aug-cc-pvdz_f12cgtg.npy")
 
