@@ -6,21 +6,13 @@ Hard-coded fit parameters for 6-GTG to STG fit.
 import psi4
 import numpy as np
 
-def stggtg(gamma):
+def stggtg(gamma, f12sq_primitive = False):
     """
     Returns a psi4 Vector of coefficients and exponents for the fit.
     Parameters generated using Molpro using default weight function.
     """
-    #coeff = np.zeros((6))
-    #exp  = np.zeros((6))
-    #coeff = psi4.core.Vector(6)
-    #exp = psi4.core.Vector(6)
-
     coeff = np.zeros((6))
     exp  = np.zeros((6))
-    #coeff = psi4.core.Vector(6)
-    #exp = psi4.core.Vector(6)
-
 
     if abs(gamma - 0.3) < 1E-6:
         coeff[0] =  -0.366770;  exp[0] =   0.020000;
@@ -184,13 +176,13 @@ def stggtg(gamma):
         coeff[4] =  -0.103770;  exp[4] =  93.137640;
         coeff[5] =  -0.065350;  exp[5] = 513.583530;
 
-    # Transform numpy array to psi4.core.Vector
-    #coeff = psi4.core.Vector.from_array(coeff)
-    #exp = psi4.core.Vector.from_array(exp)
-
     cgtg_params = []
-    for e, c in zip(exp, coeff):
-        cgtg_params.append((e, c)) 	
+    if f12sq_primitive == True:
+        for e_i, c_i in zip(exp, coeff):
+            for e_j, c_j in zip(exp, coeff):
+                cgtg_params.append((e_i + e_j, c_i*c_j))
+    else: 	
+    	for e, c in zip(exp, coeff):
+    	    cgtg_params.append((e, c)) 	
     
     return cgtg_params	
-    #return coeff, exp
