@@ -12,10 +12,11 @@ __date__      = "2017-05-23"
 import time
 import numpy as np
 import sys
-sys.path.append('/home/monikak/integral_tests/')
+sys.path.append('/home/monikak/integral_tests/F12_integrals')
 from stggtg import *
-np.set_printoptions(precision=5, linewidth=200, suppress=True)
+np.set_printoptions(precision=10, linewidth=200, suppress=True)
 import psi4
+from numpy import linalg as LA
 
 # Memory for Psi4 in GB
 psi4.set_memory('2 GB')
@@ -24,16 +25,12 @@ psi4.core.set_output_file('output.dat', False)
 # Memory for numpy in GB
 numpy_memory = 2
 
-
 mol = psi4.geometry("""
-O
-H 1 1.1
-H 1 1.1 2 104
+He
 symmetry c1
 """)
 
-
-psi4.set_options({'basis': 'aug-cc-pvdz',
+psi4.set_options({'basis': 'STO-3G',
                   'scf_type': 'pk',
                   'mp2_type': 'conv',
                   'e_convergence': 1e-8,
@@ -49,10 +46,7 @@ t = time.time()
 scf_e, wfn = psi4.energy('SCF', return_wfn=True)
 
 # Grab data from wavfunction class 
-ndocc = wfn.nalpha()
 nmo = wfn.nmo()
-SCF_E = wfn.energy()
-eps = np.asarray(wfn.epsilon_a())
 
 # Compute size of ERI tensor in GB
 ERI_Size = (nmo ** 4) * 8e-9
@@ -70,13 +64,26 @@ conv = psi4.core.BasisSet.build(mol,'BASIS',psi4.core.get_global_option('BASIS')
 mints = psi4.core.MintsHelper(wfn.basisset())
 I = np.asarray(mints.ao_eri(conv,conv,conv,conv))
 
-# Compute F12 integrals with STG geminal
+# Compute F12/STG integrals 
 # ---------------------------------------
 f12stg_ints = np.asarray(mints.ao_f12_stg(2.0))
-f12stg_ints2 = np.asarray(mints.ao_f12_stg(2.0,conv,conv,conv,conv))
+f12stg_ints2 = np.asarray(mints.ao_f12_stg(1.0,conv,conv,conv,conv))
+#print(f12stg_ints)
 
-# Compute F12 integrals with cGTG geminal
-# ----------------------------------------
-cgtg_params = stggtg(1.0)
+# Compute F12/cGTG integrals - Primitive Approche
+# -----------------------------------------------
+cgtg_params = stggtg(1.0, f12sq_primitive=True)
 f12cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
 f12cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
+print("\nF12/cGTG - Primitive Approche: ")
+#print("\n",f12cgtg_ints)
+print(LA.norm(f12stg_ints-f12cgtg_ints))
+
+# Compute F12/cGTG integrals - Monika's Approche
+# -----------------------------------------------
+cgtg_params = stggtg(2.0)
+f12cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
+f12cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
+print("\nF12/cGTG: Monika's Approche: ")
+#print("\n",f12cgtg_ints)
+print(LA.norm(f12stg_ints+f12cgtg_ints))
