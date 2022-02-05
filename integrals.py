@@ -68,7 +68,7 @@ I = np.asarray(mints.ao_eri(conv,conv,conv,conv))
 # ---------------------------------------
 f12stg_ints = np.asarray(mints.ao_f12_stg(2.0))
 f12stg_ints2 = np.asarray(mints.ao_f12_stg(1.0,conv,conv,conv,conv))
-#print(f12stg_ints)
+print(f12stg_ints)
 
 # Compute F12/cGTG integrals - Primitive Approche
 # -----------------------------------------------
@@ -76,8 +76,8 @@ cgtg_params = stggtg(1.0, f12sq_primitive=True)
 f12cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
 f12cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
 print("\nF12/cGTG - Primitive Approche: ")
-#print("\n",f12cgtg_ints)
-print(LA.norm(f12stg_ints-f12cgtg_ints))
+print("\n",f12cgtg_ints)
+#print(LA.norm(f12stg_ints-f12cgtg_ints))
 
 # Compute F12/cGTG integrals - Monika's Approche
 # -----------------------------------------------
@@ -85,5 +85,19 @@ cgtg_params = stggtg(2.0)
 f12cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
 f12cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
 print("\nF12/cGTG: Monika's Approche: ")
-#print("\n",f12cgtg_ints)
-print(LA.norm(f12stg_ints+f12cgtg_ints))
+print("\n",f12cgtg_ints)
+#print(LA.norm(f12stg_ints+f12cgtg_ints))
+
+# Compute F12G12 integrals 
+# -----------------------------------------------
+cgtg_params = stggtg(1.0)
+f12g12_ints = np.asarray(mints.ao_f12g12(cgtg_params))
+f12g12_ints2 = np.asarray(mints.ao_f12g12(cgtg_params,conv,conv,conv,conv))
+print("\n",f12g12_ints2)
+
+# Compute F12DOUBLE_COMMUTATOR integrals 
+# -----------------------------------------------
+cgtg_params = stggtg(1.0)
+f12double_commutator_ints = np.asarray(mints.ao_f12_double_commutator(cgtg_params))
+f12double_commutator_ints2 = np.asarray(mints.ao_f12_double_commutator(cgtg_params,conv,conv,conv,conv))
+print("\n",f12double_commutator_ints)
