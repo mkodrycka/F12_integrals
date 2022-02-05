@@ -1,5 +1,5 @@
 """
-Tests for F12^2 integrals - libint2
+Tests for F12G12 integrals - libint2
 """
 import psi4
 import pytest
@@ -7,7 +7,7 @@ from data_molecules.molecules import *
 from stggtg import *
 from data_libint1 import *
 
-def test_f12squared_cgtg_he_sto3g():
+def test_f12g12_he_sto3g():
     """He STO-3G"""
     # Psi4 Setup
     psi4.set_memory('1 GiB')
@@ -25,18 +25,18 @@ def test_f12squared_cgtg_he_sto3g():
     conv = psi4.core.BasisSet.build(mol,'BASIS',psi4.core.get_global_option('BASIS'))
     mints = psi4.core.MintsHelper(wfn.basisset())
 
-    cgtg_params = stggtg(1.0, f12sq_primitive=True)
-    f12squared_cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
-    f12squared_cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
+    cgtg_params = stggtg(1.0)
+    f12g12_ints = np.asarray(mints.ao_f12g12(cgtg_params))
+    f12g12_ints2 = np.asarray(mints.ao_f12g12(cgtg_params,conv,conv,conv,conv))
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints2)
+    assert np.allclose(f12g12_ints,f12g12_ints2)
 
     # Test aginst libint1       
-    f12squared_cgtg_ints_libint1 = np.load("data_libint1/he_sto3g_f12squared_cgtg.npy")
+    f12g12_ints_libint1 = np.load("data_libint1/he_sto3g_f12g12.npy")
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints_libint1)
+    assert np.allclose(f12g12_ints,f12g12_ints_libint1)
 
-def test_f12squared_cgtg_he_cc_pvdz():
+def test_f12g12_he_cc_pvdz():
     """He cc-pvdz"""
     # Psi4 Setup
     psi4.set_memory('1 GiB')
@@ -54,18 +54,18 @@ def test_f12squared_cgtg_he_cc_pvdz():
     conv = psi4.core.BasisSet.build(mol,'BASIS',psi4.core.get_global_option('BASIS'))
     mints = psi4.core.MintsHelper(wfn.basisset())
 
-    cgtg_params = stggtg(1.0, f12sq_primitive=True)
-    f12squared_cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
-    f12squared_cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
+    cgtg_params = stggtg(1.0)
+    f12g12_ints = np.asarray(mints.ao_f12g12(cgtg_params))
+    f12g12_ints2 = np.asarray(mints.ao_f12g12(cgtg_params,conv,conv,conv,conv))
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints2)
+    assert np.allclose(f12g12_ints,f12g12_ints2)
 
     # Test aginst libint1       
-    f12squared_cgtg_ints_libint1 = np.load("data_libint1/he_cc-pvdz_f12squared_cgtg.npy")
+    f12g12_ints_libint1 = np.load("data_libint1/he_cc-pvdz_f12g12.npy")
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints_libint1)
+    assert np.allclose(f12g12_ints,f12g12_ints_libint1)
 
-def test_f12squared_cgtg_he_aug_cc_pvdz():
+def test_f12g12_he_aug_cc_pvdz():
     """He cc-pvdz"""
     # Psi4 Setup
     psi4.set_memory('1 GiB')
@@ -83,18 +83,18 @@ def test_f12squared_cgtg_he_aug_cc_pvdz():
     conv = psi4.core.BasisSet.build(mol,'BASIS',psi4.core.get_global_option('BASIS'))
     mints = psi4.core.MintsHelper(wfn.basisset())
 
-    cgtg_params = stggtg(1.0, f12sq_primitive=True)
-    f12squared_cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
-    f12squared_cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
+    cgtg_params = stggtg(1.0)
+    f12g12_ints = np.asarray(mints.ao_f12g12(cgtg_params))
+    f12g12_ints2 = np.asarray(mints.ao_f12g12(cgtg_params,conv,conv,conv,conv))
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints2)
+    assert np.allclose(f12g12_ints,f12g12_ints2)
 
     # Test aginst libint1       
-    f12squared_cgtg_ints_libint1 = np.load("data_libint1/he_aug-cc-pvdz_f12squared_cgtg.npy")
+    f12g12_ints_libint1 = np.load("data_libint1/he_aug-cc-pvdz_f12g12.npy")
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints_libint1)
+    assert np.allclose(f12g12_ints,f12g12_ints_libint1)
 
-def test_f12squared_cgtg_h2o_sto3g():
+def test_f12g12_h2o_sto3g():
     """H2O STO-3G"""
     # Psi4 Setup
     psi4.set_memory('1 GiB')
@@ -112,18 +112,18 @@ def test_f12squared_cgtg_h2o_sto3g():
     conv = psi4.core.BasisSet.build(mol,'BASIS',psi4.core.get_global_option('BASIS'))
     mints = psi4.core.MintsHelper(wfn.basisset())
 
-    cgtg_params = stggtg(1.0, f12sq_primitive=True)
-    f12squared_cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
-    f12squared_cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
+    cgtg_params = stggtg(1.0)
+    f12g12_ints = np.asarray(mints.ao_f12g12(cgtg_params))
+    f12g12_ints2 = np.asarray(mints.ao_f12g12(cgtg_params,conv,conv,conv,conv))
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints2)	
+    assert np.allclose(f12g12_ints,f12g12_ints2)	
 
     # Test aginst libint1	
-    f12squared_cgtg_ints_libint1 = np.load("data_libint1/h2o_sto3g_f12squared_cgtg.npy")
+    f12g12_ints_libint1 = np.load("data_libint1/h2o_sto3g_f12g12.npy")
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints_libint1)	
+    assert np.allclose(f12g12_ints,f12g12_ints_libint1)	
 
-def test_f12squared_cgtg_h2o_cc_pvdz():
+def test_f12g12_h2o_cc_pvdz():
     """H2O cc-pVDZ"""
     # Psi4 Setup
     psi4.set_memory('1 GiB')
@@ -141,18 +141,18 @@ def test_f12squared_cgtg_h2o_cc_pvdz():
     conv = psi4.core.BasisSet.build(mol,'BASIS',psi4.core.get_global_option('BASIS'))
     mints = psi4.core.MintsHelper(wfn.basisset())
 
-    cgtg_params = stggtg(1.0, f12sq_primitive=True)
-    f12squared_cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
-    f12squared_cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
+    cgtg_params = stggtg(1.0)
+    f12g12_ints = np.asarray(mints.ao_f12g12(cgtg_params))
+    f12g12_ints2 = np.asarray(mints.ao_f12g12(cgtg_params,conv,conv,conv,conv))
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints2)
+    assert np.allclose(f12g12_ints,f12g12_ints2)
 
     # Test aginst libint1       
-    f12squared_cgtg_ints_libint1 = np.load("data_libint1/h2o_cc-pvdz_f12squared_cgtg.npy")
+    f12g12_ints_libint1 = np.load("data_libint1/h2o_cc-pvdz_f12g12.npy")
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints_libint1)
+    assert np.allclose(f12g12_ints,f12g12_ints_libint1)
 
-def test_f12squared_cgtg_h2o_aug_cc_pvdz():
+def test_f12g12_h2o_aug_cc_pvdz():
     """H2O aug-cc-pVDZ"""
     # Psi4 Setup
     psi4.set_memory('1 GiB')
@@ -170,14 +170,14 @@ def test_f12squared_cgtg_h2o_aug_cc_pvdz():
     conv = psi4.core.BasisSet.build(mol,'BASIS',psi4.core.get_global_option('BASIS'))
     mints = psi4.core.MintsHelper(wfn.basisset())
 
-    cgtg_params = stggtg(1.0, f12sq_primitive=True)
-    f12squared_cgtg_ints = np.asarray(mints.ao_f12(cgtg_params))
-    f12squared_cgtg_ints2 = np.asarray(mints.ao_f12(cgtg_params,conv,conv,conv,conv))
+    cgtg_params = stggtg(1.0)
+    f12g12_ints = np.asarray(mints.ao_f12g12(cgtg_params))
+    f12g12_ints2 = np.asarray(mints.ao_f12g12(cgtg_params,conv,conv,conv,conv))
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints2)
+    assert np.allclose(f12g12_ints,f12g12_ints2)
 
     # Test aginst libint1       
-    f12squared_cgtg_ints_libint1 = np.load("data_libint1/h2o_aug-cc-pvdz_f12squared_cgtg.npy")
+    f12g12_ints_libint1 = np.load("data_libint1/h2o_aug-cc-pvdz_f12g12.npy")
 
-    assert np.allclose(f12squared_cgtg_ints,f12squared_cgtg_ints_libint1)
+    assert np.allclose(f12g12_ints,f12g12_ints_libint1)
 	

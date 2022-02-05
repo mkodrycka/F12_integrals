@@ -1,5 +1,5 @@
 """
-Tests for F12 integrals in libint2
+Tests for F12 integrals - libint2
 """
 import psi4
 import pytest
